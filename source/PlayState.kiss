@@ -1,5 +1,7 @@
 (import flixel.FlxState)
+(import flixel.FlxG)
 (importAll components)
+(importAll systems)
 
 (extends FlxState)
 
@@ -8,16 +10,17 @@
 (method &override :Void create []
     (super.create)
     
-    (world.components.push (new Gravity 0 100))
+    (world.components.push (new Gravity 0 1600))
+    (world.systems.push (new GravitySystem))
+    (world.systems.push (new VelocitySystem))
     
-    (let [player (new Entity)]
-        (player.components.push (new Velocity))
+    (let [player (new Entity)
+            sprite (new Sprite)]
         (player.components.push (new Gravity 1 1))
-        (world.entities.push player))
-        
-    ~(world.stringify)
-    ~(World.fromJson (world.stringify))
-    )
+        (player.components.push sprite)
+        (world.entities.push player)
+        // TODO add/remove sprites automatically
+        (FlxG.state.add sprite)))
 
 (method &override :Void update [:Float elapsed]
     (super.update elapsed)

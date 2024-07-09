@@ -6,7 +6,7 @@ class FlxPointComponent extends FlxBasePoint implements Component {
     public function new(x, y) {
         super(x, y);
     }
-    
+
     public function stringify():String {
         return '$x,$y';
     }

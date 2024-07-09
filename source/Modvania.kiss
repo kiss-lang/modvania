@@ -1,0 +1,12 @@
+(function :T getComponent <>[T] [:Dynamic e :String componentTypeName]
+    (let [:Array<Component> components e.components]
+        (doFor component components
+            (when (= (Type.getClassName (Type.getClass component)) "components.${componentTypeName}")
+                (return (cast component)))))
+    null)
+
+(defMacro forEachComponent [world typedVar entityVar &body body]
+    (let [componentTypeName (typeName typedVar)]
+        `(for ,entityVar .entities ,world
+            (let [,typedVar (getComponent ,entityVar ,componentTypeName)]
+                ,@body))))

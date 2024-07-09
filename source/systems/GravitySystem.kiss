@@ -1,0 +1,20 @@
+(importAll components)
+(import flixel.math.FlxPoint)
+
+(extends System)
+
+(load "../Modvania.kiss")
+
+(prop :FlxPoint tmpPoint (new FlxPoint))
+
+(method new []
+    (super))
+
+(method &override :Void update [:Float elapsed :World world]
+    (forEachComponent world :Gravity g e
+        (unless (getComponent e "Velocity")
+            (e.components.push (new Velocity)))
+        (let [:Gravity worldGravity (getComponent world "Gravity")
+                :FlxPoint velocityPoint (getComponent e "Velocity")]
+            (tmpPoint.set (* g.x worldGravity.x) (* g.y worldGravity.y))
+            (velocityPoint.add (* elapsed tmpPoint.x) (* elapsed tmpPoint.y)))))

@@ -4,8 +4,9 @@ import haxe.DynamicAccess;
 import haxe.Json;
 
 class World {
-    public var entities(default, null): Array<Entity> = [];
-    public var components(default, null): Array<Component> = [];
+    public var entities(default, null):Array<Entity> = [];
+    public var components(default, null):Array<Component> = [];
+    public var systems(default, null):Array<System> = [];
 
     public function new() {}
 
@@ -37,6 +38,8 @@ class World {
     }
 
     public function update(elapsed:Float) {
-
+        for (system in systems) {
+            system.update(elapsed, this);
+        }
     }
 }

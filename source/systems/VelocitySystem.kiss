@@ -1,0 +1,14 @@
+(importAll components)
+
+(extends System)
+
+(load "../Modvania.kiss")
+
+(method new []
+    (super))
+
+(method &override :Void update [:Float elapsed :World world]
+     (forEachComponent world :Velocity v e
+        (let [:Sprite s (getComponent e "Sprite")]
+            (+= s.x (* elapsed v.x))
+            (+= s.y (* elapsed v.y)))))
