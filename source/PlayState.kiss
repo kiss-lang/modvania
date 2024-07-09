@@ -1,8 +1,25 @@
 (import flixel.FlxState)
+(importAll components)
+
 (extends FlxState)
 
+(prop :World world (new World))
+
 (method &override :Void create []
-    (super.create))
+    (super.create)
+    
+    (world.components.push (new Gravity 0 100))
+    
+    (let [player (new Entity)]
+        (player.components.push (new Velocity))
+        (player.components.push (new Gravity 1 1))
+        (world.entities.push player))
+        
+    ~(world.stringify)
+    ~(World.fromJson (world.stringify))
+    )
 
 (method &override :Void update [:Float elapsed]
-    (super.update elapsed))
+    (super.update elapsed)
+    
+    (world.update elapsed))
